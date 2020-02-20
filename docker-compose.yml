@@ -1,0 +1,31 @@
+version: '3'
+services:
+  todo_app:
+    volumes:
+      - ./Webserver:/var/www
+    environment:
+      - ENV=DEV
+    container_name: todo_app
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./Provisioning/node.dockerfile
+    tty: true
+    working_dir: /var/www
+    ports:
+      - "3010:3010"
+    networks:
+      - app-network
+
+  # Set up redis
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+      driver: bridge
