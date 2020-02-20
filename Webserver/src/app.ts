@@ -1,25 +1,27 @@
 import express from "express";
+import { createConnection } from 'typeorm';
+
+const APIRoutes = require('./Api/routes');
+
+
 require('dotenv').config();
 
-const bodyParser = require('body-parser');
 const app = express();
 
-app.set('trust proxy', true);
+createConnection().then(async (connection) => {
+  
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-app.get('/', (req: any, res) => {
-  res.send('Home');
-});
-
-if(!module.parent) {
-  app.listen(3010, () => {
-    console.log('Dev server initated');
+  app.get('/', (req: any, res) => {
+      res.send('Base Route');
   });
-}
 
+  app.use('/api/v1', APIRoutes);
+  
+  app.listen(3010, () => {
+      console.log('Server Working');
+  });
+}).catch(err => {
+  console.log(err);
+});
 
 module.exports = app;
