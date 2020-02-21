@@ -7,9 +7,9 @@
         "sourceMap": true,
         "outDir":"./dist",
         "target":"es6",
-        "jsx": "react",
         "esModuleInterop": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "experimentalDecorators": true
     },
     "include": [
         "./src/**/*"
