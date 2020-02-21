@@ -10,14 +10,13 @@ const app = express();
 
 createConnection().then(async (connection) => {
   
-
   app.get('/', (req: any, res) => {
       res.send('Base Route');
   });
 
   app.use('/api/v1', APIRoutes);
   
-  app.listen(3010, () => {
+  app.listen(5000, () => {
       console.log('Server Working');
   });
 }).catch(err => {
