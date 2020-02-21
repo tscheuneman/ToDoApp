@@ -3,6 +3,7 @@
 /Webserver/dist
 /Webserver/.env
 /Webserver/logs/*
+/Webserver/ormconfig.js
 /Webserver/resources/public/upload/*
 /Webserver/assets/resources/js/*
 

@@ -2,7 +2,7 @@ version: '3'
 services:
   todo_app:
     volumes:
-      - ./Webserver:/var/www
+      - ./Webserver:/var/www/todo
     environment:
       - ENV=DEV
     container_name: todo_app
@@ -11,20 +11,38 @@ services:
       context: ./
       dockerfile: ./Provisioning/node.dockerfile
     tty: true
-    working_dir: /var/www
+    working_dir: /var/www/todo
     ports:
-      - "3010:3010"
+      - "5000:5000"
     networks:
       - app-network
+    links:
+      - redis_todo
+      - postgres
 
   # Set up redis
-  redis:
+  redis_todo:
     image: "redis:alpine"
-    container_name: redis
+    container_name: redis_todo
     ports:
       - "6379:6379"
     networks:
       - app-network
+
+  postgres:
+    image: "postgres:alpine"
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todoapp
+    networks:
+      - app-network
+    volumes:
+      - ./Provisioning/deployment/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
 
 networks:
   app-network:
