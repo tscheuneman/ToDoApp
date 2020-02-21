@@ -10,7 +10,7 @@ module.exports = {
     "logging": false,
     "esModuleInterop": false,
     "entities": [
-       "dist/Models/**/*.js"
+       "dist/Models/**/*.js!(*.Extend.js)"
     ],
     "migrations": [
        "migrations/**/*.ts"
