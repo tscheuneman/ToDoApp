@@ -6,7 +6,7 @@
   "scripts": {
     "watch:server": "tsc -p ./tsconfig.server.json --watch",
     "build:server": "tsc -p ./tsconfig.server.json",
-    "start": "node /var/www/dist/app.js"
+    "start": "nodemon ./dist/app.js -e ts --exec \"tsc -p ./tsconfig.json && node /var/www/todo/dist/app.js\""
   },
   "author": {
     "name": "Thomas Scheuneman",
