@@ -4,8 +4,16 @@ services:
     volumes:
       - /var/www/todo/node_modules
       - ./Webserver:/var/www/todo
+      - ./Provisioning/deployment/dev/dev.ormconfig.js:/var/www/todo/ormconfig.js
     environment:
       - ENV=DEV
+      - REDIS_HOST=redis_todo
+      - DB_TYPE=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=password
+      - DB_DB=todoapp
     container_name: todo_app
     restart: unless-stopped
     build:
