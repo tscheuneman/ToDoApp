@@ -39,7 +39,7 @@ services:
       - app-network
 
   postgres:
-    image: "postgres:alpine"
+    image: "postgres:11.7-alpine"
     container_name: postgres
     restart: always
     ports:
