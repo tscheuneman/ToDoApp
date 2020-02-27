@@ -2,16 +2,12 @@ import express from "express";
 import { createConnection } from 'typeorm';
 import "reflect-metadata";
 
-import {User} from './Models/User';
-
 const APIRoutes = require('./Api/routes');
 require('dotenv').config();
 
 const app = express();
 
 createConnection().then(async (connection) => {
-  
-  const user = new User();
 
   app.get('/', (req: any, res) => {
       res.send('Base Route');
