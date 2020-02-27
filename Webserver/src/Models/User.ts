@@ -2,7 +2,7 @@ import {Entity, Column} from 'typeorm';
 import {AbstractModel} from './AbstractModel';
 
 @Entity()
-export class User extends AbstractModel{
+export default class User extends AbstractModel{
 
     @Column({
         length: 255
