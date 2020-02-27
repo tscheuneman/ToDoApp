@@ -52,6 +52,7 @@ services:
       - app-network
     volumes:
       - ./Provisioning/deployment/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./Provisioning/deployment/init-db-test.sql:/docker-entrypoint-initdb.d/init-db-test.sql
 
 networks:
   app-network:
