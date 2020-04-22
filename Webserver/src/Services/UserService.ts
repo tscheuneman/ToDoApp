@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { getConnection, Repository } from 'typeorm';
 import User from '../Models/User';
 

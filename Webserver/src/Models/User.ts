@@ -1,9 +1,9 @@
-import {Entity, Column} from 'typeorm';
-import {AbstractModel} from './AbstractModel';
+import {Entity, Column, OneToMany} from 'typeorm';
+import {WithTimeStamps} from './WithTimeStamps';
+import Category from './Category';
 
 @Entity()
-export default class User extends AbstractModel{
-
+export default class User extends WithTimeStamps{
     @Column({
         length: 255
     })
@@ -19,4 +19,6 @@ export default class User extends AbstractModel{
     })
     password: string; 
 
+    @OneToMany(type => Category, category => category.user)
+    categories: Category[];
 }

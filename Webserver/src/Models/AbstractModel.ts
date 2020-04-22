@@ -1,14 +1,13 @@
-import {Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity} from 'typeorm';
-
+import {PrimaryColumn, BeforeInsert, BaseEntity} from 'typeorm';
+import {v4 as uuid} from "uuid";
 export abstract class AbstractModel extends BaseEntity{
 
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryColumn()
     id: string;
 
-    @CreateDateColumn()
-    created_at: string;
-
-    @UpdateDateColumn()
-    updated_at: string
+    @BeforeInsert()
+    private beforeInsert() {
+        this.id = uuid();
+    }
 
 }
