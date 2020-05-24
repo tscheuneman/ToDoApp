@@ -1,6 +1,7 @@
 import express from "express";
 import { createConnection } from 'typeorm';
 import * as ormConfig from '../ormconfig';
+import bodyParser from 'body-parser';
 import "reflect-metadata";
 
 
@@ -8,6 +9,11 @@ const APIRoutes = require('./Api/routes');
 require('dotenv').config();
 
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 createConnection(ormConfig).then(async (connection) => {
   app.get('/', (req: any, res) => {
