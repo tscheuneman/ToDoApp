@@ -1,6 +1,5 @@
 import { UserTest } from './tests/EntityTest/users.test.js'
 import {createConnection, Connection} from "typeorm";
-import {UserSeeder} from './seeders/users.seeder.js';
 
 beforeAll(async () => {
     const connection = await createConnection({
@@ -17,8 +16,6 @@ beforeAll(async () => {
            "/var/www/todo/dist/Models/**/*.js"
         ]
     });
-
-    UserSeeder();
 
 });
 
