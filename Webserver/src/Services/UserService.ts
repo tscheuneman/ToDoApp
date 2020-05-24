@@ -11,12 +11,21 @@ export default class UserService {
   async insert(userDetails: UserInsertDO) {
     const newuser = this.repository.create(userDetails);
     await this.repository.save(newuser);
+    return newuser;
   }
 
 
-  async find(id) {
-    const foundUser = this.repository.find({readable_id: id});
-    return foundUser;
+  async find(id, type : UserSearchType = 'ReadID') {
+    let searchKey = 'username';
+    switch(type) {
+      case 'ID':
+        searchKey = 'id';
+        break;
+      case 'ReadID':
+        searchKey = 'readable_id';
+        break;
+    }
+    return await this.repository.findOne({select: ['id', 'readable_id', 'username', 'email', 'created_at', 'updated_at'], where: {[searchKey]: id}});
   }
 
   async delete(id) {
