@@ -3,3 +3,5 @@ interface UserInsertDO {
     email: string,
     password: string
 }
+
+type UserSearchType = 'ID' | 'ReadID' | 'Username';
