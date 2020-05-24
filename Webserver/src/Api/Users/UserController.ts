@@ -47,7 +47,7 @@ exports.createUser = async (req, res) => {
     const UserPayload = req.body;
     const isValid = SchemaValidator(UserPayload, UserCreateSchema);
     if(isValid) {
-        const storedHash = Hash('sha256').update(process.env.BASE_HASH + UserPayload.username).digest('hex');
+        const storedHash = Hash('sha256').update(process.env.BASE_HASH + UserPayload.username + Date.now()).digest('hex');
         const passwordHash = Hash('sha256').update(process.env.BASE_HASH + UserPayload.password + storedHash).digest('hex');
         const ConstructedPayload = {
             ...UserPayload,
