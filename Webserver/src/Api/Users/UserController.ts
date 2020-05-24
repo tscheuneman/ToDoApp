@@ -42,6 +42,33 @@ exports.getUser = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ *
+ * "/user":
+ *   post:
+ *     tags:
+ *      - User
+ *     description: Create a new user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: username
+ *         type: string
+ *         required: true
+ *       - in: body
+ *         name: password
+ *         type: string
+ *         required: true
+ *       - in: body
+ *         name: email
+ *         type: string
+ *         required: true
+ *     responses:
+ *       200:
+ *         description: User Object
+ */
 exports.createUser = async (req, res) => {
     const UserHandler = new UserService();
     const UserPayload = req.body;
