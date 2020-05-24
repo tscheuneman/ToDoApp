@@ -1,4 +1,5 @@
 module.exports = {
+   "name": "default",
     "type": process.env.DB_TYPE ? process.env.DB_TYPE : "postgres",
     "host": process.env.DB_HOST ? process.env.DB_HOST : "localhost",
     "port": process.env.DB_PORT ? process.env.DB_PORT : 5432,
