@@ -11,9 +11,9 @@ import ExpressSession from 'express-session';
 import RedisStore from 'connect-redis';
 import Redis from 'redis';
 
+import AuthComplete from './middleware/AuthComplete';
+
 //Import Strats
-import FacebookStrat from './Auth/Strategies/FacebookStrat';
-import GoogleStrat from './Auth/Strategies/GoogleStrat';
 import GithubStrat from './Auth/Strategies/GithubStrat';
 
 const RedisClient = Redis.createClient({
@@ -41,7 +41,16 @@ app.use(ExpressSession({
     ttl: 86400
   })
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 passport.use(GithubStrat());
 
 createConnection(ormConfig).then(async (connection) => {
@@ -49,7 +58,7 @@ createConnection(ormConfig).then(async (connection) => {
       res.send('Base Route');
   });
   app.use('/login', AuthRoutes);
-  app.use('/api/v1', APIRoutes);
+  app.use('/api/v1', AuthComplete,  APIRoutes);
   app.listen(5000, () => {
       console.log('Server Working');
   });
