@@ -1,7 +1,8 @@
 interface UserInsertDO {
     username: string,
-    email: string,
-    password: string
+    userHash?: string,
+    password?: string,
+    thirdPartyID?: string
 }
 
-type UserSearchType = 'ID' | 'ReadID' | 'Username';
+type UserSearchType = 'ID' | 'ReadID' | 'Username' | 'ThirdPartyID';
