@@ -9,7 +9,7 @@ import "reflect-metadata";
 
 import ExpressSession from 'express-session';
 import RedisStore from 'connect-redis';
-import Redis from 'Redis';
+import Redis from 'redis';
 
 //Import Strats
 import FacebookStrat from './Auth/Strategies/FacebookStrat';
@@ -42,8 +42,6 @@ app.use(ExpressSession({
   })
 }));
 
-passport.use(FacebookStrat());
-passport.use(GoogleStrat());
 passport.use(GithubStrat());
 
 createConnection(ormConfig).then(async (connection) => {
