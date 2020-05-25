@@ -1,6 +1,6 @@
 import { getConnection, Repository } from 'typeorm';
 import User from '../Models/User';
-
+import {userHash, passwordHash} from '../Helpers/auth/Hasher';
 
 export default class UserService {
     private repository: Repository<User>;
@@ -9,7 +9,16 @@ export default class UserService {
     }
  
   async insert(userDetails: UserInsertDO) {
-    const newuser = this.repository.create(userDetails);
+    const UserHash = userHash(userDetails.username);
+    let password = null;
+    if(userDetails.password) {
+      password = passwordHash(UserHash, userDetails.password)
+    }
+    const newuser = this.repository.create({
+      ...userDetails,
+      password,
+      userHash: UserHash
+    });
     await this.repository.save(newuser);
     return newuser;
   }
@@ -24,8 +33,19 @@ export default class UserService {
       case 'ReadID':
         searchKey = 'readable_id';
         break;
+      case 'ThirdPartyID':
+        searchKey = 'thirdPartyID';
     }
-    return await this.repository.findOne({select: ['id', 'readable_id', 'username', 'email', 'created_at', 'updated_at'], where: {[searchKey]: id}});
+    return await this.repository.findOne({select: ['id', 'readable_id', 'username', 'created_at', 'updated_at'], where: {[searchKey]: id}});
+  }
+
+  async findOrCreate(userObj) {
+    const User = await this.find(userObj.uniqueId, 'ThirdPartyID');
+    if(User) return User;
+    return await this.insert({
+      username: userObj.username,
+      thirdPartyID: userObj.uniqueId
+    });
   }
 
   async delete(id) {
