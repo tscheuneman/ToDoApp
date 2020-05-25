@@ -1,18 +1,37 @@
+require('dotenv').config();
+
 import express from "express";
 import { createConnection } from 'typeorm';
 import * as ormConfig from '../ormconfig';
 import bodyParser from 'body-parser';
 import "reflect-metadata";
 
+import ExpressSession from 'express-session';
+import RedisStore from 'connect-redis';
+import Redis from 'Redis';
 
+const RedisClient = Redis.createClient({
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_POST
+});
+const RedisSession = RedisStore(ExpressSession);
 const APIRoutes = require('./Api/routes');
-require('dotenv').config();
-
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
+}));
+app.use(ExpressSession({
+  secret            : process.env.APP_SESSION,
+  resave            : false,
+  saveUninitialized : true,
+  store: new RedisSession({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    client: RedisClient,
+    ttl: 86400
+  })
 }));
 
 createConnection(ormConfig).then(async (connection) => {
