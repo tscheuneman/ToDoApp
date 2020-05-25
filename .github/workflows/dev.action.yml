@@ -1,0 +1,21 @@
+name: Push To Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Run Docker Compose
+      run: | 
+        docker-compose up -d
+        docker exec todo_app npm run test
+      env:
+        CI: true
+        REDIS_HOST: localhost
+        REDIS_PORT: ${{ job.services.redis.ports[6379] }}
