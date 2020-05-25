@@ -18,12 +18,14 @@ export default class User extends WithTimeStamps{
 
     @Column({
         length: 255,
-        unique: true
+        nullable: true
     })
-    email: string;
+    thirdPartyID: string;
+
 
     @Column({
-        length: 255
+        length: 255,
+        nullable: true
     })
     password: string; 
 
