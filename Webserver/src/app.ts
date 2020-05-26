@@ -3,7 +3,7 @@ require('dotenv').config();
 import express from "express";
 import { createConnection } from 'typeorm';
 import passport from 'passport';
-import * as ormConfig from '../ormconfig';
+import * as ormConfig from '../ormconfig.js';
 import bodyParser from 'body-parser';
 import "reflect-metadata";
 

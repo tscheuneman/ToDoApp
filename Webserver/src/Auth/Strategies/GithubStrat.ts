@@ -10,12 +10,11 @@ export default function GithubStrat() {
         process.nextTick(async () => {
             try {
                 const User = new UserService;
-                const UserObj = {
+                const ReturnUser = await User.findOrCreate({
                     thirdParty: true,
                     uniqueId: profile.id,
-                    username: profile.username,
-                }
-                const ReturnUser = await User.findOrCreate(UserObj);
+                    username: profile.username
+                });
                 return done(null, ReturnUser);
             } catch(err) {
                 return done(err, false);
