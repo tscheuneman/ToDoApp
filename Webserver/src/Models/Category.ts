@@ -15,11 +15,11 @@ export default class Category extends WithTimeStamps{
     slug: string;
 
     @Column({
-        length: 32
+        length: 36
     })
     user: string;
 
-    @OneToMany(type => Task, task => task.category)
+    @OneToMany(type => Task, task => task.category, { onDelete: 'CASCADE' })
     notes: Task[];
 
 }
