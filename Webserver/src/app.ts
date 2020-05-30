@@ -44,7 +44,7 @@ createConnection(ormConfig).then(async (connection) => {
       res.send('Base Route');
   });
 
-  app.use('/api/v1',  APIRoutes);
+  app.use('/api/v1', AuthComplete, APIRoutes);
   app.listen(5000, () => {
       console.log('Server Working');
   });
