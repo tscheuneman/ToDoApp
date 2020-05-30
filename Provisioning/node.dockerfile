@@ -5,6 +5,9 @@ ENV enviorment = ${ENV}
 WORKDIR /var/www/todo
 
 COPY ./Webserver/package*.json ./
+COPY ./Provisioning/deployment/dev/dev.ormconfig.js ./ormconfig.js
+
+
 RUN yarn install
 
 COPY ./Webserver .
