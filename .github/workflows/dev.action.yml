@@ -6,22 +6,23 @@ on:
       - dev
 
 jobs:
-  services:
-    # Label used to access the service container
-    postgres_app:
-      # Docker Hub image
-      image: postgres
-      # Provide the password for postgres
-      env:
-        POSTGRES_PASSWORD: password
-      # Set health checks to wait until postgres has started
-      options: >-
-        --health-cmd pg_isready
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
   build:
     runs-on: ubuntu-latest
+
+    services:
+      # Label used to access the service container
+      postgres_app:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: password
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@master
