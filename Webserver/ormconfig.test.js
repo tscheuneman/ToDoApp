@@ -1,7 +1,8 @@
+require('dotenv').config();
 module.exports = {
     "name": "default",
      "type": "postgres",
-     "host": "postgres_app",
+     "host": process.env.DB_HOST ? DB_HOST : 'postgres_app',
      "port": 5432,
      "username": "postgres",
      "password": "password",
