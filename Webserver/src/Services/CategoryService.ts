@@ -28,6 +28,15 @@ export default class CategoryService {
     }
   }
 
+  async verify(categoryObj) {
+    const foundElement : Category = await this.repository.findOne({user: categoryObj.user, id: categoryObj.id});
+    if(foundElement) {
+      return true;
+    }
+    return false;
+   
+  }
+
   async get(userID : string, slug = null) {
     if(slug) {
       return await this.repository.findOne({select: ['id', 'readable_id', 'slug', 'name'], where: {user: userID, slug: slug}});
