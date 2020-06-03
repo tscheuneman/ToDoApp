@@ -1,6 +1,5 @@
 import {Entity, Column, OneToOne, JoinColumn, OneToMany} from 'typeorm';
 import {WithTimeStamps} from './WithTimeStamps';
-import User from './User';
 import Task from './Task';
 @Entity()
 export default class Category extends WithTimeStamps{
@@ -15,11 +14,12 @@ export default class Category extends WithTimeStamps{
     })
     slug: string;
 
-    @OneToOne(type => User)
-    @JoinColumn()
-    user: User;
+    @Column({
+        length: 36
+    })
+    user: string;
 
-    @OneToMany(type => Task, task => task.category)
+    @OneToMany(type => Task, task => task.category, { onDelete: 'CASCADE' })
     notes: Task[];
 
 }

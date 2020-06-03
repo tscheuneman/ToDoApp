@@ -2,8 +2,8 @@ require('dotenv').config();
 
 import express from "express";
 import { createConnection } from 'typeorm';
-import passport from 'passport';
-import * as ormConfig from '../ormconfig';
+
+import * as ormConfig from '../ormconfig.js';
 import bodyParser from 'body-parser';
 import "reflect-metadata";
 
@@ -13,16 +13,12 @@ import Redis from 'redis';
 
 import AuthComplete from './middleware/AuthComplete';
 
-//Import Strats
-import GithubStrat from './Auth/Strategies/GithubStrat';
-
 const RedisClient = Redis.createClient({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_POST
 });
 const RedisSession = RedisStore(ExpressSession);
 const APIRoutes = require('./Api/routes');
-const AuthRoutes = require('./Auth/Routes/AuthRoutes');
 
 const app = express();
 
@@ -41,24 +37,14 @@ app.use(ExpressSession({
     ttl: 86400
   })
 }));
-app.use(passport.initialize());
-app.use(passport.session());
 
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-passport.use(GithubStrat());
 
 createConnection(ormConfig).then(async (connection) => {
   app.get('/', (req: any, res) => {
       res.send('Base Route');
   });
-  app.use('/login', AuthRoutes);
-  app.use('/api/v1', AuthComplete,  APIRoutes);
+
+  app.use('/api/v1', AuthComplete, APIRoutes);
   app.listen(5000, () => {
       console.log('Server Working');
   });

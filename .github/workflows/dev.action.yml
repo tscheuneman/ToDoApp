@@ -8,9 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - name: Run Docker Compose
       run: | 
         docker-compose up -d
@@ -19,3 +19,5 @@ jobs:
         CI: true
         REDIS_HOST: localhost
         REDIS_PORT: ${{ job.services.redis.ports[6379] }}
+        POSTGRES_HOST: postgres_app
+        POSTGRES_PORT: 5432

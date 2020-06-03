@@ -1,10 +1,10 @@
 import express from "express";
 
-const UserRoutes = require('./Users/UserRoutes');
+const CategoryRoutes = require('./Category/CategoryRoutes');
 
 const router = express.Router();
 
-router.use('/user', UserRoutes);
+router.use('/category', CategoryRoutes);
 
 
 module.exports = router;
