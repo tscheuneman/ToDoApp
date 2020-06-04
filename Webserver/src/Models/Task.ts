@@ -10,11 +10,6 @@ export default class Task extends WithTimeStamps{
     name: string;
 
     @Column({
-        length: 255
-    })
-    slug: string;
-
-    @Column({
         type: 'text'
     })
     text: string;
