@@ -13,6 +13,8 @@ import Redis from 'redis';
 
 import AuthComplete from './middleware/AuthComplete';
 
+import SeederHelper from './Helpers/Seeder/SeederHelper';
+
 const RedisClient = Redis.createClient({
   host: process.env.REDIS_HOST,
   port: process.env.REDIS_POST
@@ -40,6 +42,9 @@ app.use(ExpressSession({
 
 
 createConnection(ormConfig).then(async (connection) => {
+  if(process.env.ENV !== 'PROD') {
+    SeederHelper();
+  }
   app.get('/', (req: any, res) => {
       res.send('Base Route');
   });
