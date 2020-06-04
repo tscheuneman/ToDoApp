@@ -54,9 +54,5 @@ export default class CategoryService {
     }
 
   }
-
-  repo() {
-    return this.repository;
-  }
 }
  
